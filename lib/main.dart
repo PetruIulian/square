@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 void main() {
   runApp(const SquareApp());
 }
@@ -18,21 +17,16 @@ class SquareApp extends StatelessWidget {
   }
 }
 
-
-
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
   final String title;
-
-
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   int input = 0;
   String? error = 'Please type a number';
 
@@ -40,11 +34,9 @@ class _MyHomePageState extends State<MyHomePage> {
     String result = 'Number is not perfect square or cubic';
     if (checkCube(number) && checkSquare(number)) {
       result = 'Number is a perfect square and a perfect cube';
-    }
-    else if (checkSquare(number)) {
+    } else if (checkSquare(number)) {
       result = 'Number is perfect square';
-    }
-    else if (checkCube(number)) {
+    } else if (checkCube(number)) {
       result = 'Number is a perfect cube';
     }
     // set up the button
@@ -83,8 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
       }
       if (mid * mid < x) {
         left = mid + 1;
-      }
-      else {
+      } else {
         right = mid - 1;
       }
     }
@@ -102,8 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
       }
       if (mid * mid * mid < x) {
         left = mid + 1;
-      }
-      else {
+      } else {
         right = mid - 1;
       }
     }
@@ -129,15 +119,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 labelText: 'Input your number',
                 errorText: error,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(25)
-                  ,),
+                  borderRadius: BorderRadius.circular(25),
+                ),
               ),
               onChanged: (String number) {
                 setState(() {
                   if (number.isEmpty) {
                     error = 'Please type a number';
-                  }
-                  else {
+                  } else {
                     input = int.tryParse(number)!;
                     error = null;
                   }
