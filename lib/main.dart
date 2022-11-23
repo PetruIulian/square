@@ -34,37 +34,38 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   int input = 0;
-  String? error = null;
-  showAlertDialog(BuildContext context, int number) {
-    String result = "Number is not perfect square or cubic";
-    if (checkCube(number) && checkSquare(number)){
-      result = "Number is a perfect square and a perfect cube";
+  String? error = 'Please type a number';
+
+  void showAlertDialog(BuildContext context, int number) {
+    String result = 'Number is not perfect square or cubic';
+    if (checkCube(number) && checkSquare(number)) {
+      result = 'Number is a perfect square and a perfect cube';
     }
-    else if (checkSquare(number)){
-      result = "Number is perfect square";
+    else if (checkSquare(number)) {
+      result = 'Number is perfect square';
     }
-    else if (checkCube(number)){
-      result = "Number is a perfect cube";
+    else if (checkCube(number)) {
+      result = 'Number is a perfect cube';
     }
     // set up the button
-    Widget okButton = TextButton(
-      child: Text("OK"),
+    final Widget okButton = TextButton(
+      child: const Text('OK'),
       onPressed: () {
         Navigator.pop(context);
       },
     );
 
     // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("Result"),
-      content: Text("$result"),
-      actions: [
+    final AlertDialog alert = AlertDialog(
+      title: const Text('Result'),
+      content: Text(result),
+      actions: <Widget>[
         okButton,
       ],
     );
 
     // show the dialog
-    showDialog(
+    showDialog<Widget>(
       context: context,
       builder: (BuildContext context) {
         return alert;
@@ -72,26 +73,39 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  bool checkSquare(int x){
+  bool checkSquare(int x) {
     int left = 1;
     int right = x;
-    while(left <= right){
-      int mid = ((left + right) / 2).toInt();
-      if (mid * mid == x) return true;
-      if (mid * mid < x){ left = mid + 1;}
-    else {right = mid -1;}
-  }
-  return false;
+    while (left <= right) {
+      final int mid = (left + right) ~/ 2;
+      if (mid * mid == x) {
+        return true;
+      }
+      if (mid * mid < x) {
+        left = mid + 1;
+      }
+      else {
+        right = mid - 1;
+      }
+    }
+    return false;
   }
 
-  bool checkCube(int x){
+  bool checkCube(int x) {
     int left = 1;
     int right = x;
-    while(left <= right){
-      int mid = ((left + right) / 2).toInt();
-      if (mid * mid * mid == x) return true;
-      if (mid * mid * mid < x){ left = mid + 1;}
-      else {right = mid -1;}
+    while (left <= right) {
+      final int mid = (left + right) ~/ 2;
+
+      if (mid * mid * mid == x) {
+        return true;
+      }
+      if (mid * mid * mid < x) {
+        left = mid + 1;
+      }
+      else {
+        right = mid - 1;
+      }
     }
     return false;
   }
@@ -100,29 +114,28 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: const Text('Number Shapes'),
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-           const Text(
-             "Input your number",
-             style: TextStyle(fontSize: 36),
-           ),
+            const Text(
+              'Input your number',
+              style: TextStyle(fontSize: 36),
+            ),
             TextField(
-              keyboardType: TextInputType.numberWithOptions(),
+              keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                labelText: "Input your number",
+                labelText: 'Input your number',
                 errorText: error,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(25)
-                ),
-                ),
-              onChanged: (String number){
+                  ,),
+              ),
+              onChanged: (String number) {
                 setState(() {
-                  if(number.isEmpty) {
-                    error = "Please type a number";
+                  if (number.isEmpty) {
+                    error = 'Please type a number';
                   }
                   else {
                     input = int.tryParse(number)!;
@@ -135,12 +148,11 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
-            showAlertDialog(context, input);
+        onPressed: () {
+          showAlertDialog(context, input);
         },
         child: const Icon(Icons.check),
       ),
     );
   }
 }
-
